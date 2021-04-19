@@ -1,19 +1,26 @@
 var bkImage
 let consolas
+let userData
+let collections
 
 const COLOR = [65, 255, 0]
 
 function preload() {
   bkImage = loadImage("assets/scenes/room.jpg")
   consolas = loadFont("assets/Consolas.ttf")
+  let dataobj = loadJSON("data.json", () => {
+    userData = Object.entries(dataobj).map((data) => data[1])
+  })
 }
 
 function setup() {
+  userData = makeData()
+  collections = makeDataCollections()
   createCanvas(bkImage.width, bkImage.height)
   textAlign(CENTER)
   rectMode(CENTER)
   textFont(consolas)
-  textSize(14)
+  textSize(12)
 
   var mgr = new SceneManager()
   mgr.bkImage = bkImage // inject bkImage property
@@ -46,4 +53,43 @@ function terminalBackground() {
   pop()
 }
 
-function makeData() {}
+function makeData() {
+  return userData.map((data) => {
+    return new Data({
+      name: `${data.first_name} ${data.last_name}`,
+      phone: data.phone,
+      email: data.email,
+      occupation: data.occupation,
+      birthday: data.birthday,
+      facebookID: `/${data.first_name}${data.id}`,
+      location: data.city,
+    })
+  })
+}
+
+function makeDataCollections() {
+  let collectionData = []
+  let collections = []
+  for (let i = 0; i < userData.length; i++) {
+    if (i !== 0 && i % 7 == 0) {
+      collections.push(
+        new DataCollection({
+          data: collectionData,
+          name: `collection${i}`,
+          value: random(10, 5000),
+        })
+      )
+      collectionData = []
+    }
+    collectionData.push(userData[i])
+  }
+  collections.push(
+    new DataCollection({
+      data: collectionData,
+      name: `collection${userData.length}`,
+      value: Math.floor(random(10, 5000)),
+    })
+  )
+
+  return collections
+}

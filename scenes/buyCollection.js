@@ -15,19 +15,23 @@ class BuyCollection {
   }
 
   enter() {
+    this.buyCollection = []
+    this.collectionLinks = []
     let x = this.sceneManager.bgWidth / 2
     let y = 100
-    for (let i = 0; i < 5; i++) {
-      this.buyCollection.push({ name: "collection" + i })
+    console.log("sceneArgsCollection", this.sceneArgs)
+    console.log("buy collection", this.buyCollection)
+    this.sceneArgs.forEach((collection) => {
+      this.buyCollection.push(collection)
       this.collectionLinks.push(
-        new Button("collection", x, y, this.boxWidth, this.boxHeight, 0, [
+        new Button(collection.name, x, y, this.boxWidth, this.boxHeight, 0, [
           65,
           255,
           0,
         ])
       )
       y = y + this.boxHeight + this.space
-    }
+    })
     this.backButton = new Button(
       "Back",
       x,
@@ -40,9 +44,13 @@ class BuyCollection {
   }
 
   mousePressed() {
-    this.collectionLinks.forEach((collection) => {
+    this.collectionLinks.forEach((collection, index) => {
       if (collection.intersects(mouseX, mouseY)) {
-        this.sceneManager.showScene(BuyData)
+        let args = this.buyCollection.find((e) => {
+          return e.name === collection.displayText
+        })
+        console.log("args", args)
+        this.sceneManager.showScene(BuyData, args)
       }
     })
 

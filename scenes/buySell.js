@@ -37,7 +37,7 @@ class BuySell {
   mousePressed() {
     if (this.buyButton.intersects(mouseX, mouseY)) {
       console.log("buy")
-      this.sceneManager.showScene(BuyCollection)
+      this.sceneManager.showScene(BuyCollection, collections)
     }
 
     if (this.sellButton.intersects(mouseX, mouseY)) {

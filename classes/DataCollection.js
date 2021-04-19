@@ -1,6 +1,8 @@
 class DataCollection {
   constructor(props) {
-    this.collection = props.collection
+    this.collection = props.data
+    this.name = props.name
+    this.value = props.value
   }
 
   getCollection() {
