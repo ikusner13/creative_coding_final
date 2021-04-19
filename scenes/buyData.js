@@ -6,11 +6,13 @@ class BuyData {
     this.space = 20
     this.items = 5
     this.collection = new Array(5).fill({
-      name: "fdjskajgkdjsaklgjlasfjda",
-      phoneNumber: "phone",
-      address: "address",
-      occupation: "occupation",
+      name: "Ian Kusner",
+      phoneNumber: "123-456-7890",
+      address: "1234 west main st.",
+      occupation: "Avacado Farmer",
     })
+    this.buyButton = null
+    this.backButton = null
   }
 
   draw() {
@@ -19,43 +21,27 @@ class BuyData {
     this.drawScreen()
   }
 
+  enter() {
+    let x = this.sceneManager.bgWidth / 2
+    let y = this.yStart
+    const buyX = x - this.boxWidth / 4
+    const backX = x + this.boxWidth / 4
+    const Y = y + (this.boxHeight + this.space) * this.collection.length
+    const width = this.boxWidth / 2
+    const height = this.boxHeight
+    this.buyButton = new Button("Buy", buyX, Y, width, height, 0, COLOR)
+    this.backButton = new Button("Back", backX, Y, width, height, 0, COLOR)
+  }
+
   mousePressed() {
-    const width = this.sceneManager.bgWidth / 2
-    const xMax = width + this.boxWidth / 2
-    const xMin = width - this.boxWidth / 2
-
-    const yStart = this.yStart
-    const yIncrement = this.boxHeight + this.space
-
-    let yPos = yStart
-    for (let i = 0; i < this.items; i++) {
-      if (
-        mouseY > yPos - this.boxHeight / 2 &&
-        mouseY < yPos + this.boxHeight / 2 &&
-        mouseX > xMin &&
-        mouseX < xMax
-      ) {
-        console.log("mousePressed", i)
-      }
-      yPos += yIncrement
-    }
-
-    if (
-      mouseY > yPos - this.boxHeight / 2 &&
-      mouseY < yPos + this.boxHeight / 2 &&
-      mouseX > xMin &&
-      mouseX < width
-    ) {
-      console.log("BUY")
+    if (this.buyButton.intersects(mouseX, mouseY)) {
+      console.log("buy")
+      //add to inventory, remove from sale
       this.sceneManager.showScene(BuyCollection)
     }
-    if (
-      mouseY > yPos - this.boxHeight / 2 &&
-      mouseY < yPos + this.boxHeight / 2 &&
-      mouseX > width &&
-      mouseX < xMax
-    ) {
-      console.log("BACK")
+
+    if (this.backButton.intersects(mouseX, mouseY)) {
+      console.log("back")
       this.sceneManager.showScene(BuyCollection)
     }
   }
@@ -72,18 +58,8 @@ class BuyData {
       y = y + this.boxHeight + this.space
     })
 
-    //fill(0)
-    //stroke(200, 100)
-    rect(x - this.boxWidth / 4, y, this.boxWidth / 2, this.boxHeight)
-      .stroke(255)
-      .fill(255)
-    fill(...COLOR)
-    text("BUY", x - this.boxWidth / 4, y)
-    fill(0)
-    stroke(200, 100)
-    rect(x + this.boxWidth / 4, y, this.boxWidth / 2, this.boxHeight)
-    fill(...COLOR)
-    text("BACK", x + this.boxWidth / 4, y)
+    this.buyButton.show()
+    this.backButton.show()
   }
 
   dataInfo(info, x, y) {
@@ -93,7 +69,7 @@ class BuyData {
     text(name, x - this.boxWidth / 2 + 10, y)
     for (const d in data) {
       text(`${d}: ${data[d]}`, x, y - 10)
-      y += 10
+      y += 16
     }
     textAlign(CENTER)
   }

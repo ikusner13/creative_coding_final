@@ -13,8 +13,7 @@ function setup() {
   textAlign(CENTER)
   rectMode(CENTER)
   textFont(consolas)
-  stroke(0)
-  fill(65, 255, 0)
+  textSize(14)
 
   var mgr = new SceneManager()
   mgr.bkImage = bkImage // inject bkImage property
@@ -22,7 +21,7 @@ function setup() {
   mgr.bgWidth = bkImage.width
   mgr.bgHeight = bkImage.height
   mgr.wire()
-  mgr.showScene(SellCollection)
+  mgr.showScene(BuySell)
 }
 
 function terminalBackground() {
@@ -46,3 +45,5 @@ function terminalBackground() {
   text("MONEY:", mainWindow_w - 10, bgHeight / 2 - mainWindow_h / 2 + 25)
   pop()
 }
+
+function makeData() {}

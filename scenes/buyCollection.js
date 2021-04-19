@@ -1,5 +1,12 @@
 class BuyCollection {
-  constructor() {}
+  constructor() {
+    this.collectionLinks = []
+    this.buyCollection = []
+    this.boxWidth = 300
+    this.boxHeight = 50
+    this.space = 20
+    this.backButton = null
+  }
 
   draw() {
     background(0)
@@ -7,26 +14,47 @@ class BuyCollection {
     this.drawScreen()
   }
 
-  mousePressed() {
-    this.sceneManager.showScene(BuyData)
-  }
-
-  drawScreen() {
+  enter() {
     let x = this.sceneManager.bgWidth / 2
     let y = 100
     for (let i = 0; i < 5; i++) {
-      fill(0)
-      rect(x, y, 300, 50)
-      const collection = { name: "collection" }
-      this.collectionText(collection, x, y)
-      y = y + 50 + 20
+      this.buyCollection.push({ name: "collection" + i })
+      this.collectionLinks.push(
+        new Button("collection", x, y, this.boxWidth, this.boxHeight, 0, [
+          65,
+          255,
+          0,
+        ])
+      )
+      y = y + this.boxHeight + this.space
+    }
+    this.backButton = new Button(
+      "Back",
+      x,
+      y,
+      this.boxWidth,
+      this.boxHeight,
+      0,
+      COLOR
+    )
+  }
+
+  mousePressed() {
+    this.collectionLinks.forEach((collection) => {
+      if (collection.intersects(mouseX, mouseY)) {
+        this.sceneManager.showScene(BuyData)
+      }
+    })
+
+    if (this.backButton.intersects(mouseX, mouseY)) {
+      this.sceneManager.showScene(BuySell)
     }
   }
 
-  collectionText(collection, x, y) {
-    fill(0)
-    rect(x, y, 50, 25)
-    fill(...COLOR)
-    text(collection.name, x, y)
+  drawScreen() {
+    this.collectionLinks.forEach((collection) => {
+      collection.show()
+    })
+    this.backButton.show()
   }
 }
