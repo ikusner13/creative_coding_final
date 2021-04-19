@@ -15,6 +15,7 @@ class BuyData {
 
   draw() {
     background(0)
+    this.sceneManager.terminal()
     this.drawScreen()
   }
 

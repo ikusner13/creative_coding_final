@@ -1,8 +1,12 @@
-class BuyCollection {
-  constructor() {}
+class SellCollection {
+  constructor() {
+    this.collection = {
+      name: "collection",
+    }
+  }
 
   draw() {
-    background(0)
+    background(200)
     this.sceneManager.terminal()
     this.drawScreen()
   }
@@ -16,17 +20,18 @@ class BuyCollection {
     let y = 100
     for (let i = 0; i < 5; i++) {
       fill(0)
+      stroke(200, 100)
       rect(x, y, 300, 50)
-      const collection = { name: "collection" }
-      this.collectionText(collection, x, y)
+      rect(x + 175, y, 50, 50)
+      this.collectionText(this.collection, x, y)
       y = y + 50 + 20
     }
   }
 
   collectionText(collection, x, y) {
-    fill(0)
-    rect(x, y, 50, 25)
+    stroke(0)
     fill(...COLOR)
     text(collection.name, x, y)
+    text("sell", x + 175, y)
   }
 }

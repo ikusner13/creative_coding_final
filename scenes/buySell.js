@@ -6,13 +6,8 @@ class BuySell {
   draw() {
     //image(this.sceneManager.bkImage, 0, 0)
     background(0)
+    this.sceneManager.terminal()
     this.drawScreen()
-  }
-
-  keyPressed() {
-    if (key === "1") {
-      this.sceneManager.showScene(BuyCollection)
-    }
   }
 
   mousePressed() {
@@ -34,6 +29,7 @@ class BuySell {
       mouseY < maxBuyY
     ) {
       console.log("BUY")
+      this.sceneManager.showScene(BuyCollection)
     }
     if (
       mouseX > minSellX &&
@@ -42,24 +38,16 @@ class BuySell {
       mouseY < maxBuyY
     ) {
       console.log("Sell")
+      this.sceneManager.showScene(SellCollection)
     }
   }
 
   drawScreen() {
     const bgWidth = this.sceneManager.bgWidth
     const bgHeight = this.sceneManager.bgHeight
-    rectMode(CENTER)
-    stroke(0, 255, 0)
-    strokeWeight(2)
-    fill(0)
-    const mainWindow_w = 575
-    const mainWindow_h = 350
-    rect(bgWidth / 2, bgHeight / 2, mainWindow_w, mainWindow_h)
-    fill(0, 255, 0)
-    rect(bgWidth / 2, bgHeight / 2 - mainWindow_h / 2, mainWindow_w, 25)
 
-    fill(255, 40)
-    stroke(150)
+    fill(...COLOR)
+    stroke(0)
     text("buy", bgWidth / 2 - this.buyWidth, bgHeight / 2)
     text("sell", bgWidth / 2 + this.buyWidth, bgHeight / 2)
     rect(
