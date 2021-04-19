@@ -3,6 +3,6 @@
     "*.js",
     "libraries/*.js",
     "/Users/ikusner/.vscode/extensions/samplavigne.p5-vscode-1.2.6/p5types/global.d.ts",
-    "scenes/buySell.js"
+    "scenes/*.js"
   ]
 }

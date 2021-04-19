@@ -1,6 +1,6 @@
 class BuyData {
   constructor() {
-    this.boxWidth = 300
+    this.boxWidth = 500
     this.boxHeight = 50
     this.yStart = 100
     this.space = 20
@@ -65,24 +65,29 @@ class BuyData {
     let y = this.yStart
 
     this.collection.forEach((info) => {
-      fill(0, 255, 0)
-      rect(x, y, 300, 50)
+      stroke(200, 100)
+      fill(0)
+      rect(x, y, this.boxWidth, this.boxHeight)
       this.dataInfo(info, x, y)
-      y = y + 50 + 20
+      y = y + this.boxHeight + this.space
     })
 
-    fill(0, 255, 0)
-    rect(x - 300 / 4, y, 150, 50)
-    fill(255)
-    text("BUY", x - 300 / 4, y)
-    fill(0, 255, 0)
-    rect(x + 300 / 4, y, 150, 50)
-    fill(255)
-    text("BACK", x + 300 / 4, y)
+    //fill(0)
+    //stroke(200, 100)
+    rect(x - this.boxWidth / 4, y, this.boxWidth / 2, this.boxHeight)
+      .stroke(255)
+      .fill(255)
+    fill(...COLOR)
+    text("BUY", x - this.boxWidth / 4, y)
+    fill(0)
+    stroke(200, 100)
+    rect(x + this.boxWidth / 4, y, this.boxWidth / 2, this.boxHeight)
+    fill(...COLOR)
+    text("BACK", x + this.boxWidth / 4, y)
   }
 
   dataInfo(info, x, y) {
-    fill(255)
+    fill(...COLOR)
     const { name, ...data } = info
     textAlign(LEFT)
     text(name, x - this.boxWidth / 2 + 10, y)

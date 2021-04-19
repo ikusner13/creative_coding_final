@@ -13,6 +13,8 @@ function setup() {
   textAlign(CENTER)
   rectMode(CENTER)
   textFont(consolas)
+  stroke(0)
+  fill(65, 255, 0)
 
   var mgr = new SceneManager()
   mgr.bkImage = bkImage // inject bkImage property

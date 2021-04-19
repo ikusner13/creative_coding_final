@@ -18,7 +18,7 @@ class SellCollection {
   drawScreen() {
     let x = this.sceneManager.bgWidth / 2
     let y = 100
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       fill(0)
       stroke(200, 100)
       rect(x, y, 300, 50)
@@ -30,7 +30,10 @@ class SellCollection {
 
   collectionText(collection, x, y) {
     stroke(0)
+    textAlign(LEFT)
     fill(...COLOR)
+    text("$100", x - 140, y)
+    textAlign(CENTER)
     text(collection.name, x, y)
     text("sell", x + 175, y)
   }
