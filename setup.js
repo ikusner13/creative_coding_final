@@ -3,6 +3,8 @@ let consolas
 let userData
 let collections
 
+let inventory
+
 const COLOR = [65, 255, 0]
 
 function preload() {
@@ -22,7 +24,10 @@ function setup() {
   textFont(consolas)
   textSize(12)
 
+  inventory = new Inventory()
+
   var mgr = new SceneManager()
+  mgr.inventory = inventory
   mgr.bkImage = bkImage // inject bkImage property
   mgr.terminal = terminalBackground
   mgr.bgWidth = bkImage.width
@@ -49,7 +54,11 @@ function terminalBackground() {
   textAlign(RIGHT)
   fill(65, 255, 0)
   stroke(0)
-  text("MONEY:", mainWindow_w - 10, bgHeight / 2 - mainWindow_h / 2 + 25)
+  text(
+    `MONEY:${inventory.money}`,
+    mainWindow_w - 10,
+    bgHeight / 2 - mainWindow_h / 2 + 25
+  )
   pop()
 }
 
