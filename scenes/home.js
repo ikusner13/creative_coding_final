@@ -36,12 +36,10 @@ class Home {
 
   mousePressed() {
     if (this.scamButton.intersects(mouseX, mouseY)) {
-      console.log("buy")
       this.sceneManager.showScene(ScamHome)
     }
 
     if (this.buySellButton.intersects(mouseX, mouseY)) {
-      console.log("sell")
       this.sceneManager.showScene(BuySell)
     }
   }
