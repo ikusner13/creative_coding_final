@@ -22,13 +22,19 @@ class BuyCollection {
     console.log("sceneArgsCollection", this.sceneArgs)
     console.log("buy collection", this.buyCollection)
     this.sceneArgs.forEach((collection) => {
+      console.log("buy collections", collection)
       this.buyCollection.push(collection)
       this.collectionLinks.push(
-        new Button(collection.name, x, y, this.boxWidth, this.boxHeight, 0, [
-          65,
-          255,
+        new Button(
+          `${collection.name}\t\t\t\t$${collection.value}`,
+          x,
+          y,
+          this.boxWidth,
+          this.boxHeight,
           0,
-        ])
+          [65, 255, 0],
+          collection
+        )
       )
       y = y + this.boxHeight + this.space
     })
@@ -47,7 +53,7 @@ class BuyCollection {
     this.collectionLinks.forEach((collection, index) => {
       if (collection.intersects(mouseX, mouseY)) {
         let args = this.buyCollection.find((e) => {
-          return e.name === collection.displayText
+          return e.name === collection.ref.name
         })
         console.log("args", args)
         this.sceneManager.showScene(BuyData, args)

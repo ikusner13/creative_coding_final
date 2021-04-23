@@ -16,7 +16,6 @@ function preload() {
 }
 
 function setup() {
-  userData = makeData()
   collections = makeDataCollections()
   createCanvas(bkImage.width, bkImage.height)
   textAlign(CENTER)
@@ -33,7 +32,7 @@ function setup() {
   mgr.bgWidth = bkImage.width
   mgr.bgHeight = bkImage.height
   mgr.wire()
-  mgr.showScene(BuySell)
+  mgr.showScene(Intro)
 }
 
 function terminalBackground() {
@@ -66,39 +65,30 @@ function makeData() {
   return userData.map((data) => {
     return new Data({
       name: `${data.first_name} ${data.last_name}`,
-      phone: data.phone,
-      email: data.email,
-      occupation: data.occupation,
-      birthday: data.birthday,
-      facebookID: `/${data.first_name}${data.id}`,
-      location: data.city,
+      phone: Math.round(Math.random()) ? data.phone : " ",
+      email: Math.round(Math.random()) ? data.email : " ",
+      occupation: Math.round(Math.random()) ? data.occupation : " ",
+      birthday: Math.round(Math.random()) ? data.birthday : " ",
+      facebookID: Math.round(Math.random())
+        ? `/${data.first_name}${data.id}`
+        : " ",
+      location: Math.round(Math.random()) ? data.city : " ",
     })
   })
 }
 
 function makeDataCollections() {
-  let collectionData = []
   let collections = []
-  for (let i = 0; i < userData.length; i++) {
-    if (i !== 0 && i % 7 == 0) {
-      collections.push(
-        new DataCollection({
-          data: collectionData,
-          name: `collection${i}`,
-          value: random(10, 5000),
-        })
-      )
-      collectionData = []
-    }
-    collectionData.push(userData[i])
-  }
-  collections.push(
-    new DataCollection({
-      data: collectionData,
-      name: `collection${userData.length}`,
-      value: Math.floor(random(10, 5000)),
+  for (let i = 1; i <= 6; i++) {
+    let data = makeData()
+    let collection = new DataCollection({
+      id: i,
+      data: data,
+      name: `breach${i}`,
+      value: Math.round(Math.floor(random(10, 5000)) / 100) * 100,
     })
-  )
 
+    collections.push(collection)
+  }
   return collections
 }

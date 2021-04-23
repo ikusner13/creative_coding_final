@@ -1,5 +1,5 @@
 class Button {
-  constructor(displayText, x, y, width, height, bgColor, textColor) {
+  constructor(displayText, x, y, width, height, bgColor, textColor, ref = {}) {
     this.displayText = displayText
     this.x = x
     this.y = y
@@ -7,6 +7,7 @@ class Button {
     this.height = height
     this.bgColor = bgColor
     this.textColor = textColor
+    this.ref = ref
   }
 
   show() {

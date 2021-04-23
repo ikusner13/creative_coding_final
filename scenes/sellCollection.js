@@ -1,7 +1,7 @@
 class SellCollection {
   constructor() {
-    this.collection = new Array(6).fill({ name: "collection", amount: 100 })
-    this.sellLinks = []
+    this.collectionLinks = []
+    this.buyCollection = []
     this.boxWidth = 300
     this.boxHeight = 50
     this.space = 20
@@ -9,17 +9,26 @@ class SellCollection {
   }
 
   draw() {
-    background(200)
     this.sceneManager.terminal()
     this.drawScreen()
   }
 
   enter() {
+    this.buyCollection = []
+    this.collectionLinks = []
     let x = this.sceneManager.bgWidth / 2
     let y = 100
-    this.collection.forEach((collection) => {
-      this.sellLinks.push(
-        new Button("Sell", x + 175, y, 50, this.boxHeight, 0, COLOR)
+    console.log("sceneArgsCollection", this.sceneArgs)
+    console.log("buy collection", this.buyCollection)
+    inventory.collectionsOwned.forEach((collection) => {
+      console.log("sell collections", collection)
+      this.buyCollection.push(collection)
+      this.collectionLinks.push(
+        new Button(collection.name, x, y, this.boxWidth, this.boxHeight, 0, [
+          65,
+          255,
+          0,
+        ])
       )
       y = y + this.boxHeight + this.space
     })
@@ -33,31 +42,24 @@ class SellCollection {
       COLOR
     )
   }
-
   mousePressed() {
-    this.sellLinks.forEach((button, index) => {
-      if (button.intersects(mouseX, mouseY)) {
-        console.log("sell", index)
+    this.collectionLinks.forEach((collection, index) => {
+      if (collection.intersects(mouseX, mouseY)) {
+        let args = this.buyCollection.find((e) => {
+          return e.name === collection.displayText
+        })
+        console.log("args", args)
+        this.sceneManager.showScene(SellData, args)
       }
     })
+
     if (this.backButton.intersects(mouseX, mouseY)) {
       this.sceneManager.showScene(BuySell)
     }
   }
-
   drawScreen() {
-    let x = this.sceneManager.bgWidth / 2
-    let y = 100
-    this.collection.forEach((collection) => {
-      fill(0)
-      stroke(200, 100)
-      rect(x, y, 300, 50)
-      this.collectionText(collection, x, y)
-      y = y + 50 + 20
-    })
-
-    this.sellLinks.forEach((button) => {
-      button.show()
+    this.collectionLinks.forEach((collection) => {
+      collection.show()
     })
     this.backButton.show()
   }
@@ -66,7 +68,7 @@ class SellCollection {
     stroke(0)
     textAlign(LEFT)
     fill(...COLOR)
-    text(`$${collection.amount}`, x - 140, y)
+    text(`$${collection.value}`, x - 140, y)
     textAlign(CENTER)
     text(collection.name, x, y)
   }

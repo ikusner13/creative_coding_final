@@ -1,4 +1,4 @@
-class BuyData {
+class SellData {
   constructor() {
     this.boxWidth = 675
     this.boxHeight = 60
@@ -6,7 +6,7 @@ class BuyData {
     this.space = 10
     this.items = 5
     this.collection = []
-    this.buyButton = null
+    this.sellButton = null
     this.backButton = null
   }
 
@@ -25,28 +25,32 @@ class BuyData {
       y + (this.boxHeight + this.space) * this.collection.length - this.space
     const width = this.boxWidth / 2
     const height = this.boxHeight * (3 / 4)
-    this.buyButton = new Button("Buy", buyX, Y, width, height, 0, COLOR)
+    this.sellButton = new Button("Sell", buyX, Y, width, height, 0, COLOR)
     this.backButton = new Button("Back", backX, Y, width, height, 0, COLOR)
   }
 
   mousePressed() {
-    if (this.buyButton.intersects(mouseX, mouseY)) {
-      collections = collections.filter((e) => {
+    if (this.sellButton.intersects(mouseX, mouseY)) {
+      console.log(this.collection)
+
+      inventory.collectionsOwned.filter((e) => {
         console.log("e", e)
         if (e.name === this.sceneArgs.name) {
-          inventory.subtractMoney(100)
-          inventory.addCollection(e)
+          inventory.addMoney(100)
+          inventory.collectionsOwned = inventory.collectionsOwned.filter(
+            (coll) => coll.id !== e.id
+          )
           console.log("my collections", inventory.collectionsOwned)
         }
         return e.name !== this.sceneArgs.name
       })
       //add to inventory, remove from sale
-      this.sceneManager.showScene(BuyCollection, collections)
+      this.sceneManager.showScene(SellCollection, collections)
     }
 
     if (this.backButton.intersects(mouseX, mouseY)) {
       console.log("back")
-      this.sceneManager.showScene(BuyCollection, collections)
+      this.sceneManager.showScene(SellCollection, collections)
     }
   }
 
@@ -62,7 +66,7 @@ class BuyData {
       y = y + this.boxHeight + this.space
     })
 
-    this.buyButton.show()
+    this.sellButton.show()
     this.backButton.show()
   }
 
