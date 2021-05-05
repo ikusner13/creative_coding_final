@@ -46,6 +46,7 @@ class ScamHome {
     this.buttons.forEach((button) => {
       if (button.intersects(mouseX, mouseY)) {
         const { id, first_name, last_name } = button.ref
+        console.log("coll owned", inventory.collectionsOwned)
         let obj = inventory.collectionsOwned.map((coll) => {
           let person = coll.collection.find(
             (p) => p.name === `${first_name} ${last_name}`
@@ -70,6 +71,7 @@ class ScamHome {
           if (o.facebookID !== " ") scam.facebookID = o.facebookID
           if (o.location !== " ") scam.location = o.location
         })
+        console.log("scam", scam)
         this.sceneManager.showScene(ScamData, scam)
       }
     })

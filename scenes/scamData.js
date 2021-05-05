@@ -26,9 +26,20 @@ class ScamData extends ShowData {
   mousePressed() {
     if (this.actionButton.intersects(mouseX, mouseY)) {
       let amount = this.countProperties() * 100
-      inventory.addMoney(amount)
-      //add to inventory, remove from sale
-      this.sceneManager.showScene(ScamHome)
+
+      let moreData =
+        inventory.scamsPerformed[this.collection[0].name] !== undefined
+          ? this.countProperties() >
+            inventory.scamsPerformed[this.collection[0].name].resources
+          : true
+
+      if (amount > 0 && moreData) {
+        inventory.addMoney(amount)
+        inventory.scammed(this.collection[0])
+        this.sceneManager.showScene(ScamAftermath, this.collection)
+      } else {
+        this.sceneManager.showScene(ScamHome)
+      }
     }
 
     if (this.backButton.intersects(mouseX, mouseY)) {

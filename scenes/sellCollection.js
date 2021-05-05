@@ -10,9 +10,12 @@ class SellCollection extends Collection {
     let y = 100
     inventory.collectionsOwned.forEach((collection) => {
       this.buyCollection.push(collection)
+      collection.myPrice = Math.floor(
+        (inventory.totalScams / 3) * collection.value
+      )
       this.collectionLinks.push(
         new Button(
-          collection.name,
+          `${collection.name}\t\t\t\t\t$${collection.myPrice}`,
           x,
           y,
           this.boxWidth,

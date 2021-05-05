@@ -5,15 +5,21 @@ class BuyData extends ShowData {
 
   mousePressed() {
     if (this.actionButton.intersects(mouseX, mouseY)) {
-      collections = collections.filter((e) => {
-        if (e.name === this.sceneArgs.name) {
-          inventory.subtractMoney(100)
-          inventory.addCollection(e)
-          console.log("my collections", inventory.collectionsOwned)
-        }
-        return e.name !== this.sceneArgs.name
-      })
-      //add to inventory, remove from sale
+      console.log("ref", this.actionButton.ref)
+      if (inventory.money - this.actionButton.ref.value > 0) {
+        console.log("if")
+        collections = collections.filter((e) => {
+          if (e.id === this.actionButton.ref.id) {
+            let amount = this.actionButton.ref.value
+            console.log("buy amount", amount)
+            inventory.subtractMoney(amount)
+            inventory.addCollection(e)
+            console.log("my collections", inventory.collectionsOwned)
+          }
+          return e.id !== this.actionButton.ref.id
+        })
+        //add to inventory, remove from sale
+      }
       this.sceneManager.showScene(BuyCollection, collections)
     }
 

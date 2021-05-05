@@ -4,6 +4,7 @@ class BuyCollection extends Collection {
   }
 
   enter() {
+    first = false
     this.buyCollection = []
     this.collectionLinks = []
     let x = this.sceneManager.bgWidth / 2

@@ -46,7 +46,8 @@ class ShowData {
       width,
       height,
       0,
-      COLOR
+      COLOR,
+      this.sceneArgs
     )
     this.backButton = new Button("Back", backX, Y, width, height, 0, COLOR)
   }
